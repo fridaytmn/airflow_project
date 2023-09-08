@@ -3,6 +3,7 @@ import os
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
+from airflow.sensors.external_task_sensor import ExternalTaskSensor
 from ingestion_script import ingest_data
 
 AIRFLOW_HOME = os.environ.get("AIRFLOW_HOME", "/opt/airflow")
@@ -36,4 +37,12 @@ with workflow:
         )
     )
     
-curl_task >> load_task
+    external_task_sensor = ExternalTaskSensor(
+        task_id='external_task_sensor',
+        timeout=180,
+        retries=2,
+        external_task_id='check_db_connect',
+        external_dag_id='check_db'
+    )
+    
+curl_task >> external_task_sensor >> load_task
