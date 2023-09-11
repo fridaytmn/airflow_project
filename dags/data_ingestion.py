@@ -12,7 +12,7 @@ AIRFLOW_HOME = os.environ.get("AIRFLOW_HOME", "/opt/airflow")
 URL_PREFIX = "https://d37ci6vzurychx.cloudfront.net/trip-data/"
 URL_TEMPLATE = URL_PREFIX + "yellow_tripdata_{{ execution_date.strftime(\'%Y-%m\') }}.parquet"
 OPTPUT_TEMPLATE = AIRFLOW_HOME + "/output_{{ execution_date.strftime(\'%Y-%m\') }}.parquet"
-TABLE_TEMPLATE = "yellow_taxi_{{ execution_date.strftime(\'%Y-%m\') }}"
+TABLE_TEMPLATE = "yellow_taxi_data"
 
 
 workflow = DAG(
@@ -37,12 +37,12 @@ with workflow:
         )
     )
     
-    external_task_sensor = ExternalTaskSensor(
-        task_id='external_task_sensor',
-        timeout=180,
-        retries=2,
-        external_task_id='check_db_connect',
-        external_dag_id='check_db'
-    )
+    # external_task_sensor = ExternalTaskSensor(
+    #     task_id='external_task_sensor',
+    #     timeout=180,
+    #     retries=2,
+    #     external_task_id='check_pg_connect',
+    #     external_dag_id='check_pg'
+    # )
     
-curl_task >> external_task_sensor >> load_task
+curl_task >> load_task
