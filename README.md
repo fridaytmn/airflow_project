@@ -2,8 +2,6 @@
 
 # Airflow Project 🚀
 
-![Airflow Project](https://your-image-url.com)
-
 This project demonstrates how to use Apache Airflow to orchestrate workflows within a Docker environment. It provides a Dockerized setup using docker-compose for easy deployment and management of the Airflow services. This project downloads New York yellow taxi data and loads it into database. You can then run various queries against this analytics database.
 
 ## Requirements
@@ -23,7 +21,7 @@ To get started with the project, follow these steps:
    cd airflow_project
    ```
 
-    Create a .env file and write data there
+    Create a `.env` file and write data there
     `
     PG_USER=***
     PG_PASS=***
