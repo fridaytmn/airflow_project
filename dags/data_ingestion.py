@@ -3,7 +3,7 @@ import os
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
-from airflow.sensors.external_task_sensor import ExternalTaskSensor
+# from airflow.sensors.external_task_sensor import ExternalTaskSensor
 from ingestion_script import ingest_data
 
 AIRFLOW_HOME = os.environ.get("AIRFLOW_HOME", "/opt/airflow")
