@@ -1,14 +1,16 @@
-import pandas as pd
 from sqlalchemy import create_engine
 import pyarrow.parquet as pq
 from time import time
-import os
+from os import environ
+import dotenv
+
+dotenv.load_dotenv(dotenv.load_dotenv())
 
 def ingest_data(parquet_file, table_name):
     
     parquet_file = pq.ParquetFile(parquet_file)
 
-    engine = create_engine(f"postgresql://root:root@de_postgres:5432/ny_taxi")
+    engine = create_engine(f"postgresql://{environ.get('PG_USER')}:{environ.get('PG_PASS')}@de_postgres:{int(environ.get('PG_PORT'))}/{environ.get('PG_DB')}")
 
     for batch in parquet_file.iter_batches(batch_size=100000):
         t_start = time()
