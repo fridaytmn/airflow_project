@@ -5,4 +5,4 @@ pyarrow==13.0.0
 SQLAlchemy==1.4.49
 apache-airflow-providers-postgres
 python-decouple
-python-dotenv
+python-dotenv==1.0.0
